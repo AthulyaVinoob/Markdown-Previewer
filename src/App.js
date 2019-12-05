@@ -4,7 +4,7 @@ import {Container, Row, Col} from 'react-bootstrap';
 import FormGroup from 'react-bootstrap/FormGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import HTMLOutputComponent from './HTMLOutputComponent'
-
+import Button from 'react-bootstrap/Button'
 class App extends Component {
 
 constructor(props){
@@ -33,6 +33,11 @@ this.setState({
   markdown : markdown
 })
 }
+clearInput(event){
+  this.setState({
+    markdown :' '
+  })
+}
   render(){
     return (
           <div id="App">
@@ -41,7 +46,11 @@ this.setState({
             <Row>
               <Col>
               <Card border="light">
-                <Card.Header>MarkDown Input</Card.Header>
+                <Card.Header>MarkDown Input
+                <Button style={{position:'absolute', top:0,right:0}} variant="dark"
+                        onClick={(e)=>this.clearInput(e)}
+                >Clear</Button>
+                </Card.Header>
                 <Card.Body>
                 <Card.Text>
                     <FormGroup controlId="formTextArea">
