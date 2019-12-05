@@ -3,9 +3,8 @@ import Card from 'react-bootstrap/Card';
 import {Container, Row, Col} from 'react-bootstrap';
 import FormGroup from 'react-bootstrap/FormGroup'
 import FormControl from 'react-bootstrap/FormControl'
-
-
 import HTMLOutputComponent from './HTMLOutputComponent'
+
 class App extends Component {
 
 constructor(props){
@@ -14,6 +13,19 @@ constructor(props){
   markdown :''
 }
 this.updateMarkdown =this.updateMarkdown.bind(this);
+}
+componentDidMount() {
+  const readmePath = require("./Markdown.md");
+
+  fetch(readmePath)
+    .then(response => {
+      return response.text()
+    })
+    .then(text => {
+      this.setState({
+        markdown: text
+      })
+    })
 }
 
 updateMarkdown(markdown){
@@ -33,7 +45,8 @@ this.setState({
                 <Card.Body>
                 <Card.Text>
                     <FormGroup controlId="formTextArea">
-                      <FormControl  style = {{height:"60vh"}}
+                      <FormControl  id="editor"
+                                    style = {{height:"60vh"}}
                                     as="textarea"
                                     placeholder="Enter Markdown" 
                                     value={this.state.markdown}
@@ -48,7 +61,7 @@ this.setState({
                 <Card border="dark" >
                   <Card.Header>Output</Card.Header>
                   <Card.Body>
-                    <Card.Text>
+                    <Card.Text >
                     <HTMLOutputComponent markdown={this.state.markdown}/>
                     </Card.Text>
                   </Card.Body>
